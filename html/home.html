@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
+        
+    </head>
+    <body>
+        <video id="video" controls="controls" autoplay>
+            <source src="/" type="video/mp4">
+        </video>
+        <script>
+            var video = document.getElementById('video');
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                     console.log("video and hls.js are now bound together !");
+                     hls.loadSource("/stream");
+                    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+                        console.log("manifest loaded, found " + data.levels.length + " quality level");
+                    });
+                });
+            }
+            function play() {
+                video.play()
+            }
+            </script>
+
+            <button onclick="play()">Play</button>
+    </body>
+</html>
